@@ -14,7 +14,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
 
 /**
- * Created by i.shapoval on 22.02.2017.
+ * Created on 22.02.2017.
  */
 public class MyFirstTest {
     private WebDriver driver;
