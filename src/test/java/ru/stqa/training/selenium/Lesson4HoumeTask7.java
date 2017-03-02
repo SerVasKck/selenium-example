@@ -40,9 +40,7 @@ public class Lesson4HoumeTask7 {
         while (n<=driver.findElements(By.xpath("(//li[@id='app-']/a/span[2])")).toArray().length) {
             driver.findElement(By.xpath("(//li[@id='app-']/a/span[2])["+n+"]")).click();
             driver.findElement(By.tagName("h1"));
-            //int m = driver.findElements(By.xpath("//li[5]/ul/li[3]/a/span")).toArray().length;
-            int m = driver.findElements(By.xpath("//li["+n+"]/ul/li/a/span")).toArray().length;
-            System.out.println(m);//li[2]/ul/li[2]/a/span
+
             if(driver.findElements(By.xpath("//li["+n+"]/ul/li/a/span")).toArray().length!=0)
             {int i=1;
                 while (i<=driver.findElements(By.xpath("//li["+n+"]/ul/li/a/span")).toArray().length)
