@@ -7,7 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
+import static org.junit.Assert.assertTrue;
 import java.util.concurrent.TimeUnit;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
@@ -35,50 +35,25 @@ public class Lesson4HoumeTask7 {
     @Test
     public void TestExercise7(){
 
-      /*  driver.findElement(By.className("name")).click();
-        driver.findElement(By.tagName("h1"));
-        //запрашиваем по id
-        driver.findElement(By.id("doc-template")).click();
-        driver.findElement(By.tagName("h1"));
-        driver.findElement(By.id("doc-logotype")).click();
-        driver.findElement(By.tagName("h1"));*/
-
-        //запрашиваем по css
-     /*   driver.findElement(By.xpath("(//li[@id='app-']/a/span[2])[2]")).click();
-        driver.findElement(By.tagName("h1"));
-        driver.findElement(By.cssSelector("li #doc-catalog")).click();
-        driver.findElement(By.tagName("h1"));
-        driver.findElement(By.cssSelector("li #doc-product_groups")).click();
-        driver.findElement(By.tagName("h1"));
-        driver.findElement(By.cssSelector("li #doc-option_groups")).click();
-        driver.findElement(By.tagName("h1"));
-        driver.findElement(By.cssSelector("li #doc-manufacturers")).click();
-        driver.findElement(By.tagName("h1"));
-        driver.findElement(By.cssSelector("li #doc-suppliers")).click();
-        driver.findElement(By.tagName("h1"));
-        driver.findElement(By.cssSelector("li [id = doc-delivery_statuses]")).click();
-        driver.findElement(By.tagName("h1"));
-        driver.findElement(By.cssSelector("li [id = doc-sold_out_statuses]")).click();
-        driver.findElement(By.tagName("h1"));
-        driver.findElement(By.cssSelector("#doc-quantity_units > a > span.name")).click();
-        driver.findElement(By.tagName("h1"));
-        driver.findElement(By.cssSelector("#doc-csv > a > span.name")).click();
-        driver.findElement(By.tagName("h1"));*/
-
-        //запрашиваем по xpath
-        driver.findElement(By.xpath("(//li[@id='app-']/a/span[2])[3]")).click();
-        driver.findElement(By.tagName("h1"));
-        driver.findElement(By.xpath("(//li[@id='app-']/a/span[2])[4]")).click();
-       // System.out.println(driver.findElement(By.xpath("(//li[@id='app-']/a/span[2])[4]")).getText());
-        driver.findElement(By.tagName("h1"));
-
-
-
-
-
-
-
-
+       //перебор в цикле
+        int n=1;
+        while (n<=driver.findElements(By.xpath("(//li[@id='app-']/a/span[2])")).toArray().length) {
+            driver.findElement(By.xpath("(//li[@id='app-']/a/span[2])["+n+"]")).click();
+            driver.findElement(By.tagName("h1"));
+            //int m = driver.findElements(By.xpath("//li[5]/ul/li[3]/a/span")).toArray().length;
+            int m = driver.findElements(By.xpath("//li["+n+"]/ul/li/a/span")).toArray().length;
+            System.out.println(m);//li[2]/ul/li[2]/a/span
+            if(driver.findElements(By.xpath("//li["+n+"]/ul/li/a/span")).toArray().length!=0)
+            {int i=1;
+                while (i<=driver.findElements(By.xpath("//li["+n+"]/ul/li/a/span")).toArray().length)
+                {
+                    driver.findElement(By.xpath("//li["+n+"]/ul/li["+i+"]/a/span")).click();
+                    driver.findElement(By.tagName("h1"));
+                    i++;
+                }
+            }
+            n++;
+        }
 
 
     }
