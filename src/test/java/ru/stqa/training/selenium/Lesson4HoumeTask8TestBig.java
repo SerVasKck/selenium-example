@@ -56,7 +56,7 @@ public class Lesson4HoumeTask8TestBig {
             if (element1.findElements(By.cssSelector("[class^=sticker]")).toArray().length<1)
             {System.out.println("less");
                 resalt = false;}
-                
+
             assertTrue(element1.findElements(By.cssSelector("[class^=sticker]"))
                     .toArray().length==1);
 
