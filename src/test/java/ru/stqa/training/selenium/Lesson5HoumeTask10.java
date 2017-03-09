@@ -58,22 +58,24 @@ public class Lesson5HoumeTask10 {
 
     @Before
     public void start() {
-      //  driver = new ChromeDriver();
+       driver = new ChromeDriver();
       //   driver = new InternetExplorerDriver(); //не вышло
-        driver = new FirefoxDriver();
+      //  driver = new FirefoxDriver();
         wait = new WebDriverWait(driver, 10);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get("http://localhost/litecart");
         wait.until(titleIs("Online Store | My Store"));
 
+
+
     }
 
     @Test
     public void TestExercise10() {
-
         int i=0;
         String colorRegular = "0";
         String colorCampaign = "0";
+        String styleCampaign = "0";
 
         List<WebElement> elements = driver.findElements(By.cssSelector("#box-campaigns .link[title$=Duck]"));
         String name[] = new String[elements.toArray().length];
@@ -88,15 +90,18 @@ public class Lesson5HoumeTask10 {
             regPrice[i] = element1.findElement(By.cssSelector(".regular-price")).getAttribute("textContent");
             System.out.println(element1.findElement(By.cssSelector(".regular-price")).getAttribute("textContent"));
             camPrice[i] = element1.findElement(By.cssSelector(".campaign-price")).getAttribute("textContent");
-            //colorRegPris
-            System.out.println( "цвет на основной странице обічная цена"+element1.findElement(By.cssSelector(".regular-price"))
-                    .getCssValue("color"));
-            System.out.println( "цвет на основной странице обічная цена"+element1.findElement(By.cssSelector(".campaign-price"))
-                    .getCssValue("color"));
+
+            //getColor
+
             colorCampaign = element1.findElement(By.cssSelector(".campaign-price"))
                     .getCssValue("color");
             colorRegular = element1.findElement(By.cssSelector(".regular-price"))
                     .getCssValue("color");
+
+            //getStyle
+            styleCampaign = element1.findElement(By.cssSelector(".campaign-price"))
+                    .getCssValue("style");
+            System.out.println("kjkjklj"+styleCampaign);
 
 
             i++;
