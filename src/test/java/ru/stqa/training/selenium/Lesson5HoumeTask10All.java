@@ -7,22 +7,20 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
-import java.util.regex.*;
-
 /**
- * Created  on 07.03.2017.
+ * Created  on 09.03.2017.
  */
-public class Lesson5HoumeTask10 {
+public class Lesson5HoumeTask10All {
     private WebDriver driver;
     private WebDriverWait wait;
     int i=0;
@@ -35,16 +33,16 @@ public class Lesson5HoumeTask10 {
 
     public Boolean isColorRed (String colorCampaign)
     {
-    Pattern pat=Pattern.compile("[-]?[0-9]+(.[0-9]+)?");
-            Matcher matcher=pat.matcher(colorCampaign);
-            int col=0;
-            String color[] = new String[4];
-            while (matcher.find()) {
-                color[col] = matcher.group();
-                col++;
-            };
-            if ( (color[0]+color[1]+color[2]).contains("20400")) return true;
-            else   return false;
+        Pattern pat=Pattern.compile("[-]?[0-9]+(.[0-9]+)?");
+        Matcher matcher=pat.matcher(colorCampaign);
+        int col=0;
+        String color[] = new String[4];
+        while (matcher.find()) {
+            color[col] = matcher.group();
+            col++;
+        };
+        if ( (color[0]+color[1]+color[2]).contains("20400")) return true;
+        else   return false;
 
     }
 
@@ -58,9 +56,9 @@ public class Lesson5HoumeTask10 {
             col++;
         };
         if ( color[0].contains(color[1]) && color[1].contains(color[2]) && color[2].contains(color[0]))
-          return true;
+            return true;
         else
-        return false;
+            return false;
     }
 
     public double fontSize(String size){
@@ -78,9 +76,9 @@ public class Lesson5HoumeTask10 {
 
     @Before
     public void start() {
-       driver = new ChromeDriver();
-      //   driver = new InternetExplorerDriver(); //не вышло
-      //  driver = new FirefoxDriver();
+        driver = new ChromeDriver();
+        //   driver = new InternetExplorerDriver(); //не вышло
+        //  driver = new FirefoxDriver();
         wait = new WebDriverWait(driver, 10);
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.get("http://localhost/litecart");
@@ -91,76 +89,20 @@ public class Lesson5HoumeTask10 {
     }
 
     @Test
-    public void TestExercise10PartA() {
+    public void TestExercise10All() {
         int i=0;
 
 
         List<WebElement> elements = driver.findElements(By.cssSelector("#box-campaigns .link[title$=Duck]"));
         String name[] = new String[elements.toArray().length];
         String href[] = new String[elements.toArray().length];
-
+        String regPrice[] = new String[elements.toArray().length];
+        String camPrice[] = new String[elements.toArray().length];
         for(WebElement element1: elements){
             name[i] = element1.findElement(By.cssSelector(".name")).getAttribute("textContent");
             href[i] = element1.getAttribute("href");
-
-            i++;
-
-        }
-        for (int j=0; j<i;j++) {
-            //переходим по ссылке
-            driver.get(href[j]);
-            //Сравниваем значение названия по ссылке
-            //проверяем совпадение имени
-            assertTrue(name[j].contains(driver.findElement(By.cssSelector("#box-product .title")).getText()));
-
-            driver.navigate().back();
-
-        }
-
-    }
-
-    @Test
-    public void TestExercise10PartB() {
-        int i=0;
-
-        List<WebElement> elements = driver.findElements(By.cssSelector("#box-campaigns .link[title$=Duck]"));
-        String href[] = new String[elements.toArray().length];
-        String regPrice[] = new String[elements.toArray().length];
-        String camPrice[] = new String[elements.toArray().length];
-
-        for(WebElement element1: elements){
-
-            href[i] = element1.getAttribute("href");
             regPrice[i] = element1.findElement(By.cssSelector(".regular-price")).getAttribute("textContent");
             camPrice[i] = element1.findElement(By.cssSelector(".campaign-price")).getAttribute("textContent");
-            i++;
-
-        }
-        for (int j=0; j<i;j++) {
-            //переходим по ссылке
-            driver.get(href[j]);
-
-            //проверяем совпадение цены
-            assertTrue(regPrice[j].contains(driver.findElement(By.cssSelector("#box-product .regular-price")).getText()));
-            assertTrue(camPrice[j].contains(driver.findElement(By.cssSelector("#box-product .campaign-price")).getText()));
-
-            driver.navigate().back();
-        }
-
-
-    }
-
-    @Test
-    public void TestExercise10PartC() {
-        int i=0;
-
-        List<WebElement> elements = driver.findElements(By.cssSelector("#box-campaigns .link[title$=Duck]"));
-        String href[] = new String[elements.toArray().length];
-
-        for(WebElement element1: elements){
-
-            href[i] = element1.getAttribute("href");
-
 
             //getColor
             colorRegular = element1.findElement(By.cssSelector(".regular-price"))
@@ -175,12 +117,24 @@ public class Lesson5HoumeTask10 {
             styleCampaign = element1.findElement(By.cssSelector(".campaign-price"))
                     .getCssValue("font-weight");
 
+            //getSize
+            sizeRegular = element1.findElement(By.cssSelector(".regular-price"))
+                    .getCssValue("font-size");
+            sizeCampaign = element1.findElement(By.cssSelector(".campaign-price"))
+                    .getCssValue("font-size");         
+
             i++;
 
         }
         for (int j=0; j<i;j++) {
             //переходим по ссылке
             driver.get(href[j]);
+            //Сравниваем значение названия по ссылке
+            //проверяем совпадение имени
+            assertTrue(name[j].contains(driver.findElement(By.cssSelector("#box-product .title")).getText()));
+            //проверяем совпадение цены
+            assertTrue(regPrice[j].contains(driver.findElement(By.cssSelector("#box-product .regular-price")).getText()));
+            assertTrue(camPrice[j].contains(driver.findElement(By.cssSelector("#box-product .campaign-price")).getText()));
 
             //проверяем цвет и стиль обычной  цены
             //на странице товара
@@ -204,38 +158,6 @@ public class Lesson5HoumeTask10 {
             assertTrue(isColorRed(colorCampaign));
             assertTrue(styleCampaign.contains("bold"));
 
-           driver.navigate().back();
-
-
-        }
-
-
-    }
-
-    @Test
-    public void TestExercise10PartD() {
-        int i=0;
-
-        List<WebElement> elements = driver.findElements(By.cssSelector("#box-campaigns .link[title$=Duck]"));
-        String href[] = new String[elements.toArray().length];
-
-        for(WebElement element1: elements){
-
-            href[i] = element1.getAttribute("href");
-
-            //getSize
-            sizeRegular = element1.findElement(By.cssSelector(".regular-price"))
-                    .getCssValue("font-size");
-            sizeCampaign = element1.findElement(By.cssSelector(".campaign-price"))
-                    .getCssValue("font-size");
-
-            i++;
-
-        }
-        for (int j=0; j<i;j++) {
-            //переходим по ссылке
-            driver.get(href[j]);
-
             //задание г (сравнение размеров)
             //сравниваем размер шрифта для основной страницы
             assertTrue(fontSize(sizeRegular)<fontSize(sizeCampaign));
@@ -245,9 +167,12 @@ public class Lesson5HoumeTask10 {
                     .getCssValue("font-size"))<fontSize(driver.findElement(By.cssSelector("#box-product .campaign-price"))
                     .getCssValue("font-size")));
 
+
             driver.navigate().back();
 
+
         }
+
 
     }
 
