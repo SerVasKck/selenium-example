@@ -121,7 +121,7 @@ public class Lesson5HoumeTask10All {
             sizeRegular = element1.findElement(By.cssSelector(".regular-price"))
                     .getCssValue("font-size");
             sizeCampaign = element1.findElement(By.cssSelector(".campaign-price"))
-                    .getCssValue("font-size");         
+                    .getCssValue("font-size");
 
             i++;
 
