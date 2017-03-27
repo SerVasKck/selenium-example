@@ -52,6 +52,7 @@ public class Lesson7HoumeTask13 {
             List<WebElement> goods = driver.findElements(By.cssSelector(".link[title$=Duck]"));
             goods.get(i).click();//клик на товар, при этом учитывая смену места расположения товара на странице, можно всегда, например, первый кликать
             wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#box-product .title")));//ожидаем, что страница товара открылась
+//нужно добавить проверку на наличие стикеров
 
            if (driver.findElement(By.cssSelector("#box-product .sticker")).getAttribute("textContent").equals("Sale")) { //проверяем, если по распродаже, выбираем размер
                Select size = new Select(driver.findElement(By.cssSelector("[name^=options]")));
