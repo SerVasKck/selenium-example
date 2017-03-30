@@ -1,5 +1,7 @@
-package ru.stqa.training.selenium;
+package ru.stqa.training.selenium.testsTask19;
 import org.junit.Before;
+
+import ru.stqa.training.selenium.app.NewApplication;
 /**
  * Created by i.shapoval on 30.03.2017.
  */

@@ -1,14 +1,18 @@
-package ru.stqa.training.selenium;
+package ru.stqa.training.selenium.testsTask19;
 
 
 import org.junit.Test;
+import ru.stqa.training.selenium.testsTask19.TestBase;
+import ru.stqa.training.selenium.app.NewApplication;
+
+
 import static junit.framework.TestCase.assertTrue;
 
 
 /**
  * Created  on 29.03.2017.
  */
-public class Lesson11HoumeTask19 extends TestBase{
+public class Lesson11HoumeTask19 extends TestBase {
 
     @Test
     public void TestExercise19() {

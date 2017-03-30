@@ -1,9 +1,12 @@
-package ru.stqa.training.selenium;
+package ru.stqa.training.selenium.app;
 
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import ru.stqa.training.selenium.pages.CartPage;
+import ru.stqa.training.selenium.pages.GoodPage;
+import ru.stqa.training.selenium.pages.MainPage;
 
 
 /**

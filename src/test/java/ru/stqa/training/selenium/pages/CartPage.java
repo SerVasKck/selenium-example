@@ -1,16 +1,18 @@
-package ru.stqa.training.selenium;
+package ru.stqa.training.selenium.pages;
+
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import java.util.List;
+import ru.stqa.training.selenium.Page;
 
 
 /**
  * Created  on 30.03.2017.
  */
-public class CartPage extends Page{
+public class CartPage extends Page {
 
 
     public CartPage (WebDriver driver) {
