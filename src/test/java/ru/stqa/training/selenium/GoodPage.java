@@ -5,12 +5,11 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Created by i.shapoval on 30.03.2017.
+ * Created  on 30.03.2017.
  */
 public class GoodPage extends Page {
     String kilString;
@@ -53,11 +52,7 @@ public class GoodPage extends Page {
 
     public void checkSize() {
         if (isElementPresent(By.cssSelector("td.options [name*=Size]"))) { //проверяем, если поле выбора размера, выбираем размер
-            //тут использовать
-            //  goodPage.selectSize("Small"); //для выбора размера
 
-           /* Select size = new Select(driver.findElement(By.cssSelector("[name^=options]")));
-            size.selectByValue("Small");*/
             selectSize("Small");
 
         }
@@ -70,6 +65,7 @@ public class GoodPage extends Page {
         kilString = String.valueOf(kil);//меняем значение, чтобы проверить добавился ли товар
         return kilString;
     }
+
     public void waitUntilAddToKard(String kilString){
         wait.until(ExpectedConditions.textToBe(By.cssSelector("span.quantity"), kilString));//ожидаем пока сменится количество в корзине
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("span.quantity")));//проверяем, что новый появился

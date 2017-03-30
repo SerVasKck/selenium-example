@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
 /**
- * Created by i.shapoval on 30.03.2017.
+ * Created  on 30.03.2017.
  */
 public class MainPage extends Page{
     public MainPage(WebDriver driver) {
@@ -28,7 +28,6 @@ public class MainPage extends Page{
         return goods.get(i);
     }
     public void startPage (){
-      //  driver = new ChromeDriver();
         wait = new WebDriverWait(driver, 5);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.get("http://localhost/litecart");
