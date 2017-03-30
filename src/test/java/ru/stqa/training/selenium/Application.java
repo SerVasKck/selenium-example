@@ -21,6 +21,7 @@ public class Application {
     private WebDriver driver;
     private WebDriverWait wait;
     private MainPage manePage;
+    private GoodPage goodPage;
     int i = 0;
    // int length;
     String kilString;
@@ -29,6 +30,7 @@ public class Application {
    /* public Application () {
 
         manePage = new MainPage(driver);
+        goodPage = new MainPage(driver);
 
     }*/
 
@@ -84,8 +86,7 @@ public class Application {
     public void getGoods(int i) {
         //выбираем товар
        // List<WebElement> goods = driver.findElements(By.cssSelector(".link[title$=Duck]"));
-        List<WebElement> goods =
-                driver.findElements(By.cssSelector(".link[title$=Duck]"));
+        List<WebElement> goods =   driver.findElements(By.cssSelector(".link[title$=Duck]"));
         goods.get(i).click();//клик на товар, при этом учитывая смену места расположения товара на странице, можно всегда, например, первый кликать
 
     }
@@ -96,7 +97,10 @@ public class Application {
     }
 
     public void checkSize() {
-        if (isElementPresent(By.cssSelector("td.options [name*=Size]"))) { //проверяем, если по распродаже, выбираем размер
+        if (isElementPresent(By.cssSelector("td.options [name*=Size]"))) { //проверяем, если поле выбора размера, выбираем размер
+           //тут использовать
+            // goodPage.selectSize("Small"); //для выбора размера
+
             Select size = new Select(driver.findElement(By.cssSelector("[name^=options]")));
             size.selectByValue("Small");
 
@@ -113,6 +117,8 @@ public class Application {
     public void AddToCard() {
         driver.findElement(By.cssSelector("[name=add_cart_product]")).click();
     }
+
+    //goodPage.addToCart.click();
     public void waitUntilAddToKard(String kilString){
         wait.until(ExpectedConditions.textToBe(By.cssSelector("span.quantity"), kilString));//ожидаем пока сменится количество в корзине
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("span.quantity")));//проверяем, что новый появился

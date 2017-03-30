@@ -32,31 +32,34 @@ public class Lesson11HoumeTask19 extends TestBase{
             //используем метод Выбор товара
             app.getGoods(i);
 
-            //ждем, пока страница товара откроется
-            app.waitUntilGoodPageOpen ();
+          /*  //ждем, пока страница товара откроется
+            app.waitUntilGoodPageOpen ();*/
 
-            //используем метод проверки наличия выбора размера
+          /*  //используем метод проверки наличия выбора размера
             app.checkSize();
 
             //ожидаем изменения счетчика корзины
             app.waitChangeCart();
 
           //жмем кнопку Add To Card
-            app.AddToCard();
+            app.AddToCard();*/
+          app.addGoods(); //(заменила )
 
             //ожидание смены количества товара
-            app.waitUntilAddToKard(app.kilString);
+           // app.waitUntilAddToKard(app.kilString);
 
             i++;
 
             app.backOnManePage();
 
+
         }
 
-        //открыть корзину
+       /* //открыть корзину
         app.CheckoutCart();
         //удаляем товары
-        app.removeGoods();
+        app.removeGoods();*/
+        app.removeGoodsOutOfCart();
 
        // System.out.println(app.getFinishText());
         assertTrue(app.getFinishText().contains("There are no items in your cart."));
