@@ -8,24 +8,30 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import java.io.File;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import static org.openqa.selenium.support.ui.ExpectedConditions.attributeContains;
-import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElement;
+
 import static org.openqa.selenium.support.ui.ExpectedConditions.titleIs;
 
 /**
- * Created  on 15.03.2017.
+ * Created  on 30.03.2017.
  */
-public class Lesson7HoumeTask13 {
-
+public class Application {
     private WebDriver driver;
     private WebDriverWait wait;
+    private MainPage manePage;
     int i = 0;
-    int length;
+   // int length;
     String kilString;
     WebElement quantity;
+
+   /* public Application () {
+
+        manePage = new MainPage(driver);
+
+    }*/
+
 
     protected void pause(int sec) {
         long end = System.currentTimeMillis() + (sec * 1000);
@@ -65,13 +71,31 @@ public class Lesson7HoumeTask13 {
         }
     }
 
-   private void getGoods(int i) {
-       //выбираем товар
-       List<WebElement> goods = driver.findElements(By.cssSelector(".link[title$=Duck]"));
-       goods.get(i).click();//клик на товар, при этом учитывая смену места расположения товара на странице, можно всегда, например, первый кликать
-       wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#box-product .title")));//ожидаем, что страница товара открылась
-   }
-    private void checkSize() {
+    public void startPage(){
+
+            driver = new ChromeDriver();
+            wait = new WebDriverWait(driver, 5);
+            driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+            driver.get("http://localhost/litecart");
+            wait.until(titleIs("Online Store | My Store"));
+
+    }
+
+    public void getGoods(int i) {
+        //выбираем товар
+       // List<WebElement> goods = driver.findElements(By.cssSelector(".link[title$=Duck]"));
+        List<WebElement> goods =
+                driver.findElements(By.cssSelector(".link[title$=Duck]"));
+        goods.get(i).click();//клик на товар, при этом учитывая смену места расположения товара на странице, можно всегда, например, первый кликать
+
+    }
+
+    public void waitUntilGoodPageOpen ()
+    {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#box-product .title")));//ожидаем, что страница товара открылась
+    }
+
+    public void checkSize() {
         if (isElementPresent(By.cssSelector("td.options [name*=Size]"))) { //проверяем, если по распродаже, выбираем размер
             Select size = new Select(driver.findElement(By.cssSelector("[name^=options]")));
             size.selectByValue("Small");
@@ -79,23 +103,28 @@ public class Lesson7HoumeTask13 {
         }
     }
 
-    private String waitChangeCart() {
+    public String waitChangeCart() {
         quantity = driver.findElement(By.cssSelector("span.quantity"));//находим нужный элемент
         int kil = Integer.parseInt(quantity.getText()); //запоминаем количество товара до добавления в корзину
         kil++;
         kilString = String.valueOf(kil);//меняем значение, чтобы проверить добавился ли товар
         return kilString;
     }
-    private void AddToCard() {
+    public void AddToCard() {
         driver.findElement(By.cssSelector("[name=add_cart_product]")).click();
     }
+    public void waitUntilAddToKard(String kilString){
+        wait.until(ExpectedConditions.textToBe(By.cssSelector("span.quantity"), kilString));//ожидаем пока сменится количество в корзине
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("span.quantity")));//проверяем, что новый появился
+    }
 
-    private void  CheckoutCart(){
+    public void  CheckoutCart(){
         driver.findElement(By.linkText("Checkout »")).click();
         wait.until(ExpectedConditions.textToBe(By.cssSelector("h2.title"), "Customer Details"));//ждем появления элемента, чтобы понять что страничка загрузилась
     }
 
-    private void removeGoods(){
+    public void removeGoods(){
+        int length;
         do {
             List<WebElement> inCheckout = driver.findElements(By.cssSelector("[name=remove_cart_item]"));//выгребаем все кнопки "Remove", чтобы по ним потом кликнуть
             length = inCheckout.toArray().length;//определяем количество оставшегося товара
@@ -111,24 +140,33 @@ public class Lesson7HoumeTask13 {
         while (length>1); //не завязываемся на предполагаемое количество товара, определяем его всегда, выполняем действия вплоть до последнего элемента
 
     }
+    public void backOnManePage (){
+        driver.navigate().back();//вернуться на основную страничку
+        wait.until(titleIs("Online Store | My Store"));
+    }
 
-    @Before
+    public String getFinishText(){
+
+        return driver.findElement(By.cssSelector("em")).getText();
+    }
+
+    public void  quit() {
+        driver.quit();
+        driver = null;
+    }
+  /*  @Before
     public void start() {
         driver = new ChromeDriver();
         wait = new WebDriverWait(driver, 5);
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.get("http://localhost/litecart");
         wait.until(titleIs("Online Store | My Store"));
-    }
+    }*/
 
-    @Test
+  /*  @Test
     public void TestExercise13() {
         i = 0;
         while (i<8) {
-          /*  //выбираем товар
-            List<WebElement> goods = driver.findElements(By.cssSelector(".link[title$=Duck]"));
-            goods.get(i).click();//клик на товар, при этом учитывая смену места расположения товара на странице, можно всегда, например, первый кликать
-            wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#box-product .title")));//ожидаем, что страница товара открылась*/
 
             //используем метод Выбор товара
             getGoods(i);
@@ -136,29 +174,18 @@ public class Lesson7HoumeTask13 {
             //используем метод проверки наличия выбора размера
             checkSize();
 
-        /*   if (isElementPresent(By.cssSelector("td.options [name*=Size]"))) { //проверяем, если по распродаже, выбираем размер
-               Select size = new Select(driver.findElement(By.cssSelector("[name^=options]")));
-               size.selectByValue("Small");
-
-           }*/
-
-               //ожидаем изменения счетчика корзины
+            //ожидаем изменения счетчика корзины
             waitChangeCart();
-            /*   WebElement quantity = driver.findElement(By.cssSelector("span.quantity"));//находим нужный элемент
-               int kil = Integer.parseInt(quantity.getText()); //запоминаем количество товара до добавления в корзину
-               kil++;
-               String kilString = String.valueOf(kil);//меняем значение, чтобы проверить добавился ли товар*/
 
-                AddToCard();
-              /* driver.findElement(By.cssSelector("[name=add_cart_product]")).click(); //жмем кнопку Add To Card*/
+            //жмем кнопку Add To Card
+            AddToCard();
 
-               wait.until(ExpectedConditions.textToBe(By.cssSelector("span.quantity"), kilString));//ожидаем пока сменится количество в корзине
+            //ожидание смены количества товара
 
-               wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("span.quantity")));//проверяем, что новый появился
-              // quantity = driver.findElement(By.cssSelector("span.quantity")); //скорее всего ненужно
+            wait.until(ExpectedConditions.textToBe(By.cssSelector("span.quantity"), kilString));//ожидаем пока сменится количество в корзине
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("span.quantity")));//проверяем, что новый появился
 
-            //if (quantity.getText().equals("3")) break; //можно и так выйти из цикла, тогда сделать его бесконечным, а количество товара прописать тут
-               i++;
+            i++;
 
             driver.navigate().back();//вернуться на основную страничку
             wait.until(titleIs("Online Store | My Store"));
@@ -166,25 +193,9 @@ public class Lesson7HoumeTask13 {
 
         //открыть корзину
         CheckoutCart();
-       /* driver.findElement(By.linkText("Checkout »")).click();
+        //удаляем товары
+        removeGoods();
 
-        wait.until(ExpectedConditions.textToBe(By.cssSelector("h2.title"), "Customer Details"));//ждем появления элемента, чтобы понять что страничка загрузилась
-*/
-       removeGoods();
-   /*   do {
-               List<WebElement> inCheckout = driver.findElements(By.cssSelector("[name=remove_cart_item]"));//выгребаем все кнопки "Remove", чтобы по ним потом кликнуть
-               length = inCheckout.toArray().length;//определяем количество оставшегося товара
-
-               List<WebElement> items = driver.findElements(By.cssSelector("td.item"));//запоминаем состояние таблички (её элемент)
-
-               wait.until(ExpectedConditions.visibilityOf(inCheckout.get(0)));//отслеживаем появление нужного для удаления элемента
-
-               inCheckout.get(0).click();//удаляем элемент из корзины кликом на кнопку "Remove"
-               wait.until(ExpectedConditions.stalenessOf(items.get(0)));//ожидаем пока список таблички обновится
-
-       }
-       while (length>1); //не завязываемся на предполагаемое количество товара, определяем его всегда, выполняем действия вплоть до последнего элемента
-        pause(3);*/
 
     }
 
@@ -193,5 +204,6 @@ public class Lesson7HoumeTask13 {
     public void stop() {
         driver.quit();
         driver = null;
-    }
+    }*/
 }
+
